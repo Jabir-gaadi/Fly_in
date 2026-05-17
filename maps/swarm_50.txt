@@ -1,0 +1,52 @@
+# THE GRAND SWARM TEST - 50 DRONES
+# This map tests the load balancing algorithm by offering 3 distinct main routes:
+# 1. The Highway: Short distance, high node capacity, but extremely tight links (capacity=2)
+# 2. The Residential Area: Wide links (capacity=5) but zones are restricted (takes 2 turns)
+# 3. The Industrial Park: Very wide links and high capacity, but the longest route out of the way.
+
+nb_drones: 50
+
+# === MAIN HUBS ===
+start_hub: start 0 0 [color=green max_drones=50]
+end_hub: end 10 0 [color=cyan max_drones=50]
+
+# === ROUTE 1: THE HIGHWAY (Fast but Bottlenecked) ===
+hub: hwy1 2 2 [color=yellow max_drones=25]
+hub: hwy2 5 2 [color=yellow max_drones=25]
+hub: hwy3 8 2 [color=yellow max_drones=25]
+
+# === ROUTE 2: RESIDENTIAL (Restricted Zones - 2 turns) ===
+hub: res1 3 -2 [zone=restricted color=orange max_drones=20]
+hub: res2 7 -2 [zone=restricted color=orange max_drones=20]
+
+# === ROUTE 3: INDUSTRIAL PARK (Wide open but long) ===
+hub: ind1 2 -5 [color=purple max_drones=40]
+hub: ind2 5 -6 [color=purple max_drones=40]
+hub: ind3 8 -5 [color=purple max_drones=40]
+
+# === CONNECTIONS ===
+
+# Leaving the start hub
+connection: start-hwy1 [max_link_capacity=2]
+connection: start-res1 [max_link_capacity=5]
+connection: start-ind1 [max_link_capacity=10]
+
+# Route 1: Highway Links (Bottlenecks)
+connection: hwy1-hwy2 [max_link_capacity=2]
+connection: hwy2-hwy3 [max_link_capacity=2]
+connection: hwy3-end [max_link_capacity=2]
+
+# Route 2: Residential Links
+connection: res1-res2 [max_link_capacity=5]
+connection: res2-end [max_link_capacity=5]
+
+# Route 3: Industrial Links
+connection: ind1-ind2 [max_link_capacity=10]
+connection: ind2-ind3 [max_link_capacity=10]
+connection: ind3-end [max_link_capacity=10]
+
+# Cross-zone mobility (Allows drones to change routes if traffic builds up)
+connection: hwy1-res1 [max_link_capacity=1]
+connection: hwy2-res2 [max_link_capacity=2]
+connection: res1-ind2 [max_link_capacity=3]
+connection: res2-ind3 [max_link_capacity=3]
