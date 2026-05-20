@@ -45,29 +45,3 @@ class Graph:
             return False
         zone = self.zones[zone_name]
         return False if zone.zone_type == "blocked" else True
-
-    def find_path(self, start: str, end: str) -> list[str] | None:
-        if start not in self.zones or end not in self.zones:
-            return None
-        if not (self.can_enter(start)) or not (self.can_enter(end)):
-            return None
-        queue: list[str] = [start]
-        visited: set[str] = {start}
-        parent: dict[str, str | None] = {start: None}
-
-        while queue:
-            current = queue.pop(0)
-            if current == end:
-                path: list[str] = []
-                tmp_node: str | None = end
-                while tmp_node is not None:
-                    path.insert(0, tmp_node)
-                    tmp_node = parent[tmp_node]
-                return path
-            neighbors: list[str] = self.get_neighbors(current)
-            for neighbor in neighbors:
-                if neighbor not in visited and self.can_enter(neighbor):
-                    visited.add(neighbor)
-                    parent[neighbor] = current
-                    queue.append(neighbor)
-        return None

@@ -46,12 +46,12 @@ class Visualizer:
 
         for zone in self.map_data.zones.values():
             self.ax.scatter(
-                zone.x, zone.y, s=2000, zorder=3, linewidth=2,
+                zone.x, zone.y, s=2000, zorder=2, linewidth=3,
                 edgecolors="black", color=self._valid_color(zone.color),
             )
             self.ax.text(
-                zone.x, zone.y - 0.55, zone.name,
-                ha="center", va="top", fontsize=7, color="black",
+                zone.x, zone.y - 0.1, zone.name,
+                ha="center", va="top", fontsize=10, color="black",
             )
 
     def _draw_drones(self) -> None:
@@ -133,7 +133,7 @@ class Visualizer:
             self.ax.set_title(f"Fly-in Drone Simulation — Turn {turn}")
             for did, (x, y) in frame.items():
                 self.drone_points[did].set_position((x, y))
-            plt.pause(0.5)
+            plt.pause(1)
 
         plt.ioff()
         plt.show()

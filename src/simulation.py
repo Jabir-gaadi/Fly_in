@@ -29,13 +29,14 @@ class Simulation:
 
         # PHASE 1: arrive from restricted zones
         for drone in self.pathfinder.drones:
-            if drone.in_transit and drone.arrival_turn is not None:
+            if drone.in_transit:
+                # print(f"{turn} and {drone.arrival_turn}")
                 if turn >= drone.arrival_turn:
                     next_zone = drone.path[drone.path_index]
                     drone.current_zone = next_zone
                     drone.path_index += 1
                     drone.in_transit = False
-                    drone.arrival_turn = None
+                    # drone.arrival_turn = None
                     turn_movements.append(f"D{drone.drone_id}-{next_zone}")
                     moved_drones.add(drone.drone_id)
 

@@ -8,7 +8,7 @@ from simulation import Simulation
 from visualization import Visualizer
 
 
-def main() -> None:
+if __name__ == "__main__":
     """Main entry point for the drone routing simulation.
 
     Parses command-line arguments, runs the simulation, and outputs
@@ -49,7 +49,3 @@ def main() -> None:
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
